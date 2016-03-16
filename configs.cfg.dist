@@ -1,0 +1,6 @@
+[Prod]
+api_sid: <your api sid>
+api_secret: <your api secret>
+api_phone: <from phone>
+api_phone_to: <to phone>
+
