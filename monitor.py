@@ -9,6 +9,9 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from twilio.rest import TwilioRestClient
 
+#from classes import VideoAnalyzer
+from lib.FileTree import FileTree
+
 def ConfigSectionMap(section):
     dict1 = {}
     options = config.options(section)
@@ -42,10 +45,14 @@ class MyHandler(FileSystemEventHandler):
          pprint.pprint(event.event_type)
          pprint.pprint(event.src_path)
          pprint.pprint(dir(event))
+         
+         #va = VideoAnalyzer()
+         print(FileTree.outputTree(event.src_path))
+         body = FileTree.outputTree(event.src_path)
          client.messages.create(to=API_PHONE_TO,
             from_=API_PHONE,
-            body=event.src_path)
-         #time.sleep(500)
+            body=body)
+          #time.sleep(500)
 
 
 if __name__ == "__main__":
@@ -57,7 +64,7 @@ if __name__ == "__main__":
     event_handler = MyHandler() #LoggingEventHandler()
     client = TwilioRestClient(account=API_SID, token=API_SECRET)
     event_handler.setClient(client)
-    //@todo - need to re-add the ability to analyze the files and send size in MB, pixel dimentions and a tree listing of all contents
+    #@todo - need to re-add the ability to analyze the files and send size in MB, pixel dimentions and a tree listing of all contents
 
     observer.schedule(event_handler, path, recursive=False)
     observer.start()

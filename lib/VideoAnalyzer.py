@@ -21,10 +21,10 @@ class VideoAnalyzer:
        ls_output = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams","v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", filePath])
        print ls_output
 
-
+   @staticmethod
    def findVideoResolution(self, pathToInputVideo):
 	    cmd = "ffprobe -v error -print_format json -select_streams v:0"
-	    args = shlex.split(cmd)
+            args = shlex.split(cmd)
 	    args.append(pathToInputVideo)
 	    # run the ffprobe process, decode stdout into utf-8 & convert to JSON
 	    ffprobeOutput = subprocess.check_output(args).decode('utf-8')
@@ -37,7 +37,7 @@ class VideoAnalyzer:
 	    return height + "x" + width
    @staticmethod		       
    def getVideoSize(pathtovideo):
-        pattern = re.compile(r'Stream.*Video.*([0-9]{3,})x([0-9]{3,})')
+        pattern = re.compile(r'Stream.*Video.*([0-9]{3,4})x([0-9]{3,})')
         p = subprocess.Popen(['ffmpeg', '-i', pathtovideo],
 				 stdout=subprocess.PIPE,
 				 stderr=subprocess.PIPE)
