@@ -37,14 +37,18 @@ class VideoAnalyzer:
 	    return height + "x" + width
    @staticmethod		       
    def getVideoSize(pathtovideo):
-        pattern = re.compile(r'Stream.*Video.*([0-9]{3,4})x([0-9]{3,})')
+        #pattern = re.compile(r'Stream.*Video.*([0-9]{3,4})x([0-9]{3,4})')
+        pattern = re.compile(r'Stream.*(Video.*)')
         p = subprocess.Popen(['ffmpeg', '-i', pathtovideo],
 				 stdout=subprocess.PIPE,
 				 stderr=subprocess.PIPE)
         stdout, stderr = p.communicate()
         match = pattern.search(stderr)
-	if match:
-		x, y = map(int, match.groups()[0:2])
+	
+        if match:
+                pprint.pprint(match.groups())
+		return match.groups()[0]
+                #x, y = map(int, match.groups()[0:2])
 	else:
 		x = y = 0
 	
@@ -53,7 +57,8 @@ class VideoAnalyzer:
    
 
 #va = VideoAnalyzer()
-#print va.getVideoSize("/mnt/media/complete/Wedding.m4v")
+#print va.getVideoSize("/mnt/media/complete/Goodfellas.1990.BluRay.1080p.H264.AAC-RARBG.mp4")
+#print va.getVideoSize("/mnt/media/complete/Indiana.Jones.And.The.Raiders.Of.The.Lost.Ark.1981.1080p.BluRay.x264.YIFY.mp4")
 
 #va.getDimensions("/mnt/media/complete/Wedding.m4v")
-#print va.findVideoResolution("/mnt/media/completealert/Away Days (2016).mp4")
+#print va.findVideoResolution("/mnt/media/complete/the.summit.2012.docu.dvdrip.x264-debtvid.mkv")
