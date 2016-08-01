@@ -10,7 +10,7 @@ class FileTree:
          if(os.path.isdir(filePath)):
              out = subprocess.check_output(["tree","-lhat", filePath])
 
-             vidExt = ['.mkv','.m4v','.mp4']
+             vidExt = ['.avi', '.mkv','.m4v','.mp4']
              
              dirs =  os.listdir(filePath)
              for filename in dirs:
@@ -18,10 +18,11 @@ class FileTree:
                 print("loop filext" + fileExt)
                 print("loop filename" + filename)
                 if(fileExt in vidExt):
-                     out += "vid size: " + VideoAnalyzer.getVideoSize(filePath + "/" + filename) + "\n"
+                     out += "Stream info: " + VideoAnalyzer.getVideoSize(filePath + "/" + filename) + "\n"
   
          else:
-             out = subprocess.check_output(["ls","-lhat", filePath]) 
+             out = subprocess.check_output(["ls","-lhat", filePath]) + "\n"
+             out += VideoAnalyzer.getVideoSize(filePath)
          print("returning " + out)
          return out
 
